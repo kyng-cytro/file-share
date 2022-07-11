@@ -109,8 +109,8 @@ app.post('/download', async (req, res) => {
             fileInfo.downloadCount += 1
             fileInfo.save()
             const data = await s3.getObject(params).promise();
-            await fsPromise.writeFile(`./cache/${fileInfo.originalName}`, data.Body);
-            return res.download(`./cache/${fileInfo.originalName}`,fileInfo.originalName)
+            await fsPromise.writeFile(`cache/${fileInfo.originalName}`, data.Body);
+            return res.download(`cache/${fileInfo.originalName}`,fileInfo.originalName)
         }
         else{
             if(await bcrypt.compare(req.body.password, fileInfo.password)){
