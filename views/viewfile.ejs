@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://unpkg.com/@tailwindcss/forms@0.2.1/dist/forms.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://rawcdn.githack.com/dmhendricks/file-icon-vectors/master/dist/file-icon-vectors.min.css"
+    />
+    <title>File Share: <%= locals.file.originalName%></title>
+  </head>
+  <body>
+    <div class="container mx-auto">
+      <div class="mt-10 md:grid md:grid-cols-3 md:gap-6 max-w-lg mx-auto">
+        <div class="mt-5 md:mt-0 md:col-span-3">
+          <form action="/download">
+            <div class="shadow sm:rounded-md sm:overflow-hidden">
+              <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                <h2 class="text-center text-xl font-bold text-gray-900">
+                  View File
+                </h2>
+                <% if (locals.error != null) {%>
+                <h2 class="text-center text-sm font-medium text-red-500">
+                  <%= locals.error %>
+                </h2>
+                <% } %>
+                <div class="flex items-center p-4 pb-0">
+                  <span
+                    class="fiv-viv fiv-icon-<%=locals.ext%> fiv-size-lg h-14 w-14 flex-none"
+                  ></span>
+                  <div class="ml-4 flex-auto">
+                    <div class="font-medium capitalize">
+                      <%= locals.file.fileName %>
+                    </div>
+                    <div class="mt-1 text-sm text-slate-500">
+                      File-Type: <%= locals.file.fileType %>
+                    </div>
+                    <div class="mt-1 text-sm text-slate-500">
+                      File-Size: <%= locals.file.fileSize %>
+                    </div>
+                    <div class="mt-1 text-sm text-slate-500">
+                      Downloads: <%= locals.file.downloadCount %>
+                    </div>
+                    <% if(locals.file.password != null) {%>
+                    <div class="mt-1 text-sm text-slate-500">
+                      Protected: True
+                    </div>
+                    <% } %>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 bg-gray-50 text-center sm:px-6">
+                <form
+                  id="password_form"
+                  action="/download"
+                  method="post"
+                  enctype="multipart/form-data"
+                >
+                  <input
+                    type="hidden"
+                    name="id"
+                    value="<%= locals.file.id %>"
+                  />
+                  <% if(locals.file.password != null){%>
+                  <div class="col-span-3 sm:col-span-2">
+                    <label
+                      class="block text-sm font-medium text-gray-700"
+                      for="password"
+                      >File Password</label
+                    >
+                    <input
+                      type="password"
+                      name="password"
+                      onfocus="this.removeAttribute('readonly');"
+                      class="my-2 focus:ring-indigo-500 focus:border-indigo-500 block mx-auto shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      required
+                    />
+                  </div>
+                  <% } %>
+                  <button
+                    type="submit"
+                    formmethod="post"
+                    formaction="/download"
+                    formenctype="application/x-www-form-urlencoded"
+                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Download
+                  </button>
+                </form>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
