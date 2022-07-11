@@ -111,8 +111,6 @@ app.post('/download', async (req, res) => {
             const data = await s3.getObject(params).promise();
             await fsPromise.writeFile(`./cache/${fileInfo.originalName}`, data.Body);
             return res.download(`./cache/${fileInfo.originalName}`,fileInfo.originalName)
-
-            // return res.download(fileInfo.path,filename=fileInfo.originalName)
         }
         else{
             if(await bcrypt.compare(req.body.password, fileInfo.password)){
@@ -121,7 +119,6 @@ app.post('/download', async (req, res) => {
                 const data = await s3.getObject(params).promise();
                 await fsPromise.writeFile(`./cache/${fileInfo.originalName}`, data.Body);
                 return res.download(`./cache/${fileInfo.originalName}`,fileInfo.originalName)                
-                //return res.download(fileInfo.path, filename=fileInfo.originalName)
             }
             else{
                 return res.render('viewfile', {file: fileInfo, ext: EXTS.includes(fileInfo.fileType) ? fileInfo.fileType : 'data', error: 'Invalid Password'})
@@ -129,6 +126,7 @@ app.post('/download', async (req, res) => {
         }
     }
     catch(e){
+        console.log(e)
         return res.render('404');
     }
 })
