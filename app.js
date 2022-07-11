@@ -50,17 +50,19 @@ app.use(requestIp.mw())
 
 mongoose.connect(CONNECTION_STRING)
 
-cron.schedule('*/30 * * * *', async () => {
-    fs.readdir('cache', (err, files) => {
-        if (err) throw err;
-        for (const file of files) {
-          fs.unlink(Path.join("cache", file), err => {
-            if (err) throw err;
-          });
-        }
-        console.log("Deleted Cache")
-      });
-});
+// Not needed Heroku isnt persistent
+
+// cron.schedule('*/30 * * * *', async () => {
+//     fs.readdir('cache', (err, files) => {
+//         if (err) throw err;
+//         for (const file of files) {
+//           fs.unlink(Path.join("cache", file), err => {
+//             if (err) throw err;
+//           });
+//         }
+//         console.log("Deleted Cache")
+//       });
+// });
 
 app.get('/', (req, res) => {
     return res.render("index");
@@ -117,8 +119,8 @@ app.post('/download', async (req, res) => {
                 fileInfo.downloadCount += 1
                 fileInfo.save()
                 const data = await s3.getObject(params).promise();
-                await fsPromise.writeFile(`./cache/${fileInfo.originalName}`, data.Body);
-                return res.download(`./cache/${fileInfo.originalName}`,fileInfo.originalName)                
+                await fsPromise.writeFile(`${fileInfo.originalName}`, data.Body);
+                return res.download(`${fileInfo.originalName}`,fileInfo.originalName)                
             }
             else{
                 return res.render('viewfile', {file: fileInfo, ext: EXTS.includes(fileInfo.fileType) ? fileInfo.fileType : 'data', error: 'Invalid Password'})
