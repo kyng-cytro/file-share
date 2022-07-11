@@ -1,9 +1,10 @@
 
 # File Share
 
-Web app built to help my friends upload and share files easier.
+Built to help my friends upload and share files easier.
 
 [Check It Out](https://link-url-here.org)
+
 ## Demo
 
 Insert gif or link to demo
@@ -30,8 +31,8 @@ To run this project, you will need to add the following environment variables to
 Install my-project with npm
 
 ```bash
-  git clone ''
-  cd 'File Share'
+  git clone https://github.com/kyng-cytro/file-share
+  cd 'file-share'
   npm install
   npm run start
 ```
