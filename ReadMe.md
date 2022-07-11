@@ -3,7 +3,7 @@
 
 Built to help my friends upload and share files easier.
 
-[Check It Out](https://link-url-here.org)
+[Check It Out](https://cytro-file-share.herokuapp.com)
 
 ## Demo
 
